@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: societymgmt-api
+  name: societymgmt-api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: societymgmt-api
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: societymgmt-api
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: sezg583-assignment-societymgmt
+          name: sezg583-assignment-societymgmt
+          ports:
+            - containerPort: 9091
+          resources: {}
+          imagePullPolicy: Never
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: societymgmt-api-service
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: societymgmt-api
+  ports:
+    - port: 9091
+      targetPort: 9091
+      nodePort: 30001
